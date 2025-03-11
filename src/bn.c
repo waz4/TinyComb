@@ -1,3 +1,9 @@
+/*
+  Credit: https://github.com/kokke/tiny-bignum-c
+
+  Huge thanks to the person who made this library its worked very well
+  and was relatively easy to adapt to cuda
+*/
 #ifndef __BIGNUM_H__1
 #define __BIGNUM_H__1
 
