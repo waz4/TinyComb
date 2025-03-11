@@ -2,12 +2,8 @@
 #include "combo.h"
 #include "helpers.h"
 
-int getFactMapLength(int n, int k)
-{
-    return n + k + 1;
-}
-
-void factorial(struct bn *n, struct bn *res)
+// Factorial calculation
+__host__ __device__ void factorial(struct bn *n, struct bn *res)
 {
     struct bn tmp;
 
@@ -34,7 +30,7 @@ void factorial(struct bn *n, struct bn *res)
     bignum_assign(res, &tmp);
 }
 
-void factorial_safe(int n, struct bn *result)
+__host__ __device__ void factorial_safe(int n, struct bn *result)
 {
     if (n <= 1)
     {
@@ -47,8 +43,11 @@ void factorial_safe(int n, struct bn *result)
     factorial(&n_big, result);
 }
 
+// Functions to convert number into combination,
+//  - factMap is optionall and if not being used can be ignored by passing null
+
 // Calculate (n + k - 1)! / (k! * (n - 1)!) into result
-void g(int n, int k, struct bn *result, struct bn *factMap)
+__host__ __device__ void g(int n, int k, struct bn *result, struct bn *factMap)
 {
     if (factMap != NULL)
     {
@@ -81,7 +80,7 @@ void g(int n, int k, struct bn *result, struct bn *factMap)
     }
 }
 
-unsigned int largest(struct bn *i, int nn, int kk, struct bn *x, struct bn *factMap)
+__host__ __device__ unsigned int largest(struct bn *i, int nn, int kk, struct bn *x, struct bn *factMap)
 {
     g(nn, kk, x, factMap);
 
@@ -94,19 +93,7 @@ unsigned int largest(struct bn *i, int nn, int kk, struct bn *x, struct bn *fact
     return nn;
 }
 
-void reverse_combo(unsigned int *combo, int k)
-{
-    unsigned int tmp;
-
-    for (int i = 0; i < k; i++, k--)
-    {
-        tmp = combo[k - 1];
-        combo[k - 1] = combo[i];
-        combo[i] = tmp;
-    }
-}
-
-void id2combo(struct bn *id, int n, int k, unsigned int *combo, struct bn *factMap)
+__host__ __device__ void id2combo(struct bn *id, int n, int k, unsigned int *combo, struct bn *factMap)
 {
     if (k == 0)
         return;
@@ -128,21 +115,14 @@ void id2combo(struct bn *id, int n, int k, unsigned int *combo, struct bn *factM
     reverse_combo(combo, k);
 }
 
-void init_combo(unsigned int *combo, int k)
+// Functions to deal with a single Combo
+__host__ __device__ void init_combo(unsigned int *combo, int k)
 {
     for (int i = 0; i < k; i++)
         combo[i] = 0;
 }
 
-void makeFactMap(struct bn *factMap, int factMap_size)
-{
-    for (int i = 0; i < factMap_size; i++)
-    {
-        factorial_safe(i, (factMap + i));
-    }
-}
-
-void next_combo(unsigned int *ar, unsigned int n, unsigned int k)
+__host__ __device__ void next_combo(unsigned int *ar, unsigned int n, unsigned int k)
 {
     int i, lowest_i;
 
@@ -159,11 +139,37 @@ void next_combo(unsigned int *ar, unsigned int n, unsigned int k)
         ar[i] = 0;
 }
 
-char combosMatch(unsigned int *comboA, unsigned int *comboB, int k)
+__host__ __device__ char combosMatch(unsigned int *comboA, unsigned int *comboB, int k)
 {
     for (; k > 0; k--)
         if (comboA[k] != comboB[k])
             return 0;
 
     return 1;
+}
+
+__host__ __device__ void reverse_combo(unsigned int *combo, int k)
+{
+    unsigned int tmp;
+
+    for (int i = 0; i < k; i++, k--)
+    {
+        tmp = combo[k - 1];
+        combo[k - 1] = combo[i];
+        combo[i] = tmp;
+    }
+}
+
+// Functions to take care of factorial map
+void makeFactMap(struct bn *factMap, int factMap_size)
+{
+    for (int i = 0; i < factMap_size; i++)
+    {
+        factorial_safe(i, (factMap + i));
+    }
+}
+
+int getFactMapLength(int n, int k)
+{
+    return n + k + 1;
 }

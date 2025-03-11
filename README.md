@@ -1,5 +1,6 @@
-#TODO:
-Finish README!
+# TinyComb
+
+A lightweight C and CUDA library for efficiently calculating combinations with repetition. Jump to any combination much faster than bruteforce methods, leveraging precomputed factorials and [`tiny-bignum-c`](https://github.com/kokke/tiny-bignum-c) for big-number support.
 
 ## Features
 
@@ -49,4 +50,16 @@ Traditional combination generation might compute all combinations up to a desire
 - Leveraging precomputed factorials to avoid redundant calculations.
 - Achieving **O(k) time complexity**: The `id2combo()` function runs in O(k) time, where `k` is the number of slots, thanks to the precomputed `factMap`. This means generating any specific combination takes time linear in the output size (`k`), regardless of the index or total number of combinations (C(n + k - 1, k)). For comparison, a naive sequential approach could take O(C(n + k - 1, k) \* k) to reach a high index—orders of magnitude slower.
 - Supporting both C and CUDA implementations, with CUDA offering parallel acceleration for large-scale problems.
-  > > > > > > > 240a94d (Initial Commit)
+
+## Examples
+
+For C usage examples, refer to the test files `combosCorrect.c` and `combosMatch.c`, which validate the correctness and consistency of combination generation.
+
+For a CUDA-based example, see [this project](https://github.com/waz4), where TinyComb was utilized to compute all possible trade-up contracts in CS:GO/CS2. This demonstrates how the library efficiently maps indices to combinations, leveraging CUDA for accelerated computation. By using TinyComb, large-scale combinatorial problems can be tackled effectively on both CPU and GPU, making it a powerful tool for applications requiring rapid access to specific combinations in extensive search spaces.
+For C usage examples look at the tests `combosCorrect.c` and `combosMatch.c`
+
+## TODO:
+
+- [x] Add the CUDA updated files
+- [ ] Make sure the CUDA files are working xD
+- [ ] Add CUDA examples

@@ -1,6 +1,11 @@
 #ifndef COMBO_H
 #define COMBO_H
 #include "bn.h"
+
+#ifndef __NVCC__ // for CUDA/NVCC compatibility
+#define __host__
+#define __device__
+#endif
 /*
     This library helps calculate combinations with repetition based on the index of occurance.
     Where 'n' is the number of elements and 'k' is the number of slots. As in C(n + k - 1, k)
@@ -14,23 +19,23 @@
 */
 
 // Factorial calculation
-void factorial(struct bn *n, struct bn *res);
-void factorial_safe(int n, struct bn *result);
+__device__ __host__ void factorial(struct bn *n, struct bn *res);
+__device__ __host__ void factorial_safe(int n, struct bn *result);
 
 // Functions to convert number into combination,
 //  - factMap is optionall and if not being used can be ignored by passing null
-void id2combo(struct bn *id, int n, int k, unsigned int *combo, struct bn *factMap);
-unsigned int largest(struct bn *i, int nn, int kk, struct bn *x, struct bn *factMap);
-void g(int n, int k, struct bn *result, struct bn *factMap); // Calculates (n + k - 1)! / (k! * (n - 1)!) into result
+__device__ __host__ void id2combo(struct bn *id, int n, int k, unsigned int *combo, struct bn *factMap);
+__device__ __host__ unsigned int largest(struct bn *i, int nn, int kk, struct bn *x, struct bn *factMap);
+__device__ __host__ void g(int n, int k, struct bn *result, struct bn *factMap); // Calculates (n + k - 1)! / (k! * (n - 1)!) into result
 
 // Functions to deal with a single Combo
-void init_combo(unsigned int *combo, int k);
-void next_combo(unsigned int *ar, unsigned int n, unsigned int k);
-char combosMatch(unsigned int *comboA, unsigned int *comboB, int k);
-void reverse_combo(unsigned int *combo, int k);
+__device__ __host__ void init_combo(unsigned int *combo, int k);
+__device__ __host__ void next_combo(unsigned int *ar, unsigned int n, unsigned int k);
+__device__ __host__ char combosMatch(unsigned int *comboA, unsigned int *comboB, int k);
+__device__ __host__ void reverse_combo(unsigned int *combo, int k);
 
 // Factorial Map
-int getFactMapLength(int n, int k); // Returns the required factMap_size for a combinations with n elements and k slots
 void makeFactMap(struct bn *factMap, int factMap_lenght);
+int getFactMapLength(int n, int k); // Returns the required factMap_size for a combinations with n elements and k slots
 
 #endif // End of #ifndef COMBO_H
