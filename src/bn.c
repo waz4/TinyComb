@@ -4,9 +4,6 @@
   Huge thanks to the person who made this library its worked very well
   and was relatively easy to adapt to cuda
 */
-#ifndef __BIGNUM_H__1
-#define __BIGNUM_H__1
-
 /*
 
 Big number library - arithmetic on multiple-precision unsigned integers.
@@ -642,5 +639,3 @@ __host__ __device__ static void _rshift_one_bit(struct bn *a)
   }
   a->array[BN_ARRAY_SIZE - 1] >>= 1;
 }
-
-#endif /* #ifndef __BIGNUM_H__ */

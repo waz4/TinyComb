@@ -1,6 +1,5 @@
 #ifndef COMBO_H
 #define COMBO_H
-#include "bn.h"
 
 #ifndef __NVCC__ // for CUDA/NVCC compatibility
 #define __host__
@@ -17,6 +16,7 @@
 
     TODO: remove reverse from id2combo probably by changing next_combo
 */
+#include "bn.h"
 
 // Factorial calculation
 __device__ __host__ void factorial(struct bn *n, struct bn *res);

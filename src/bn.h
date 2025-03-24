@@ -60,7 +60,7 @@ enum
 /* Initialization functions: */
 __host__ __device__ void bignum_init(struct bn *n);
 __host__ __device__ void bignum_from_int(struct bn *n, DTYPE_TMP i);
-__host__ __device__ int bignum_to_int(struct bn *n);
+__host__ int bignum_to_int(struct bn *n);
 __host__ void bignum_from_string(struct bn *n, char *str, int nbytes);
 __host__ void bignum_to_string(struct bn *n, char *str, int maxsize);
 
