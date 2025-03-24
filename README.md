@@ -55,11 +55,4 @@ Traditional combination generation might compute all combinations up to a desire
 
 For C usage examples, refer to the test files `combosCorrect.c` and `combosMatch.c`, which validate the correctness and consistency of combination generation.
 
-For a CUDA-based example, see [this project](https://github.com/waz4), where TinyComb was utilized to compute all possible trade-up contracts in CS:GO/CS2. This demonstrates how the library efficiently maps indices to combinations, leveraging CUDA for accelerated computation. By using TinyComb, large-scale combinatorial problems can be tackled effectively on both CPU and GPU, making it a powerful tool for applications requiring rapid access to specific combinations in extensive search spaces.
-For C usage examples look at the tests `combosCorrect.c` and `combosMatch.c`
-
-## TODO:
-
-- [x] Add the CUDA updated files
-- [ ] Make sure the CUDA files are working xD
-- [ ] Add CUDA examples
+For CUDA usage examples, see `cudaCoherence.cu` and look at the makeFile to see how it is compiled and linked. I also developed [this project](https://github.com/waz4), where TinyComb was utilized to compute all possible trade-up contracts in CS:GO/CS2. This demonstrates how the library efficiently maps indices to combinations, leveraging CUDA for accelerated computation. By using TinyComb, large-scale combinatorial problems can be tackled effectively on both CPU and GPU, making it a powerful tool for applications requiring rapid access to specific combinations in extensive search spaces.
