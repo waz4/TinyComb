@@ -48,8 +48,9 @@ Traditional combination generation might compute all combinations up to a desire
 
 - Using combinatorial number theory to map an index directly to its combination.
 - Leveraging precomputed factorials to avoid redundant calculations.
-- Achieving **O(k) time complexity**: The `id2combo()` function runs in O(k) time, where `k` is the number of slots, thanks to the precomputed `factMap`. This means generating any specific combination takes time linear in the output size (`k`), regardless of the index or total number of combinations (C(n + k - 1, k)). For comparison, a naive sequential approach could take O(C(n + k - 1, k) \* k) to reach a high index—orders of magnitude slower.
-- Supporting both C and CUDA implementations, with CUDA offering parallel acceleration for large-scale problems.
+- Unlike a sequential approach that might process every combination up to a high index, id2combo() computes only the desired combination, making it vastly more efficient for large indices or sets.
+- Efficiently scaling with the number of slots (k) and set size (n): The id2combo() function generates any specific combination quickly using factMap, with performance tied to both the output size (k) and the range of values (n), rather than the total number of possible combinations.
+- Supporting both C and CUDA implementations, with CUDA providing parallel acceleration for large-scale problems where multiple combinations need to be generated simultaneously.
 
 ## Examples
 
