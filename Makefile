@@ -45,11 +45,13 @@ cuda_library:
 	ar rcs ${BUILD_DIR}libtinycomb.a ${BUILD_DIR}combo.o ${BUILD_DIR}helpers.o ${BUILD_DIR}bn.o
 
 cuda: cuda_library
-	# Compile test file
+	# Compile test files
 	nvcc -c --x cu -rdc=true ${TEST_DIR}cudaBn.cu -o ${BUILD_DIR}cudaBn.o
+	nvcc -c --x cu -rdc=true ${TEST_DIR}cudaCoherence.cu -o ${BUILD_DIR}cudaCoherence.o
 
 	# Link everything into the executable
-	nvcc ${BUILD_DIR}cudaBn.o -L${BUILD_DIR} -ltinycomb -o main
+	nvcc ${BUILD_DIR}cudaBn.o -L${BUILD_DIR} -ltinycomb -o ${BUILD_DIR}cudaBnTest
+	nvcc ${BUILD_DIR}cudaCoherence.o -L${BUILD_DIR} -ltinycomb -o main #${BUILD_DIR}cudaCoherenceTest
 
 clean:
 	rm build/*
