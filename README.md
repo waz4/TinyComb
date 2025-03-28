@@ -6,6 +6,8 @@ A lightweight C and CUDA library for efficiently calculating combinations with r
 
 `TinyComb` is designed to efficiently calculate and navigate combinations _with repetition_, allowing users to jump directly from an index to its corresponding ordered combination without the overhead of generating all prior combinations. This makes it ideal for applications needing fast access to specific combinations in a large combinatorial space.
 
+By using TinyComb, large-scale combinatorial problems can be tackled effectively on both CPU and GPU, making it a powerful tool for applications requiring rapid access to combinations in extensive search spaces.
+
 ### Core Capabilities
 
 - **Combinations with Repetition**: The library computes combinations based on the formula **C(n + k - 1, k)**, where:
@@ -16,8 +18,9 @@ A lightweight C and CUDA library for efficiently calculating combinations with r
 
 - **Efficient Index-to-Combination Mapping**:
 
+  - Unlike traditional methods that iterate through all combinations sequentially, `TinyComb` can
+    generate a combination based on its index which allows the use of divide and conquer algorithms to analyze the combinatorial space much faster.
   - The `id2combo(id, n, k, combo, factMap)` function converts a given index (`id`, a big number via `struct bn`) into its corresponding combination (stored in `combo`), an array of `k` unsigned integers.
-  - Unlike traditional methods that iterate through all combinations sequentially, `TinyComb` uses precomputed factorial data (`factMap`) to compute the combination at any index in O(k) time, bypassing the need to generate the entire sequence up to that point.
   - Example: For `n = 2`, `k = 2`:
     - Index 0 → `(0, 0)`
     - Index 1 → `(0, 1)`
@@ -44,7 +47,7 @@ A lightweight C and CUDA library for efficiently calculating combinations with r
 
 ### Why It’s Efficient
 
-Traditional combination generation might compute all combinations up to a desired index, costing O(C(n + k - 1, k)) time and space in the worst case. `TinyComb` sidesteps this by:
+Traditional combination generation might compute all combinations up to a desired index, costing O(C(n + k - 1, k)) time in the worst case. `TinyComb` sidesteps this by:
 
 - Using combinatorial number theory to map an index directly to its combination.
 - Leveraging precomputed factorials to avoid redundant calculations.
@@ -56,4 +59,4 @@ Traditional combination generation might compute all combinations up to a desire
 
 For C usage examples, refer to the test files `combosCorrect.c` and `combosMatch.c`, which validate the correctness and consistency of combination generation.
 
-For CUDA usage examples, see `cudaCoherence.cu` and look at the Makefile to see how it is compiled and linked. I also developed [this project](https://github.com/waz4), where TinyComb was utilized to compute all possible trade-up contracts in CS:GO/CS2. This demonstrates how the library efficiently maps indices to combinations, leveraging CUDA for accelerated computation. By using TinyComb, large-scale combinatorial problems can be tackled effectively on both CPU and GPU, making it a powerful tool for applications requiring rapid access to specific combinations in extensive search spaces.
+For CUDA usage examples, see `cudaCoherence.cu` and look at the Makefile to see how it is compiled and linked. I also developed [this project](https://github.com/waz4#SorryNotPublicYet), where TinyComb was utilized to compute all possible trade-up contracts in CS:GO/CS2. This demonstrates how the library efficiently maps indices to combinations, leveraging CUDA for accelerated computation.
